@@ -62,16 +62,18 @@ export default class ArtistHomeView extends Component {
   render() {
     return (
       <View>
-        <Header
+        {/* <Header
           leftComponent={{ icon: "menu", color: "#fff" }}
           centerComponent={{
             text: "Artist Home Page",
             style: { color: "#fff" }
           }}
           rightComponent={{ icon: "home", color: "#fff" }}
-        />
+        /> */}
         <View>
-          <Text h4>Add a new song to your list</Text>
+          <Text h4 style={{ textAlign: "center" }}>
+            Add a new song to your list
+          </Text>
           <View>
             <FormLabel>Artist Name</FormLabel>
             <FormInput
@@ -100,22 +102,15 @@ export default class ArtistHomeView extends Component {
             title="Add Song"
             onPress={() => this.addNewSong()}
           />
+          <Button
+            backgroundColor={"#008cba"}
+            icon={{ name: "music-note" }}
+            buttonStyle={{ marginTop: 10 }}
+            title="View Song List"
+            onPress={() => this.props.navigation.navigate("ArtistSongs")}
+          />
         </View>
       </View>
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: "#F5FCFF"
-//   },
-//   title: {
-//     fontSize: 20,
-//     textAlign: "center",
-//     margin: 10
-//   }
-// });
