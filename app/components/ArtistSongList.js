@@ -23,8 +23,8 @@ export default class ArtistSongList extends Component {
               <ListItem
                 key={song.name}
                 title={song.name}
-                // subtitle={song.artist}
-                // rightTitle={song.genre}
+                subtitle={song.artist}
+                rightTitle={song.genre}
                 leftIcon={{ name: "music-note" }}
               />
             );
@@ -34,25 +34,3 @@ export default class ArtistSongList extends Component {
     );
   }
 }
-//   const list = [
-//     {
-//       title: "Appointments",
-//       icon: "av-timer"
-//     },
-//     {
-//       title: "Trips",
-//       icon: "flight-takeoff"
-//     }
-//   ];
-//   return (
-//     <List>
-//       {list.map(item => (
-//         <ListItem
-//           key={item.title}
-//           title={item.title}
-//           leftIcon={{ name: item.icon }}
-//         />
-//       ))}
-//     </List>
-//   );
-// }

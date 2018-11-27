@@ -1,29 +1,68 @@
 import React from "react";
-import { Alert, StyleSheet, View, Text, ImageBackground } from "react-native";
-import { Button } from "react-native-elements";
-
+import { Alert, StyleSheet, View, ImageBackground, Text } from "react-native";
+import { Button, FormLabel, FormInput } from "react-native-elements";
+//create login page here, change login background image, toggle from musician to curator, route to correct half of app
 export default class CuratorArtistLandingPage extends React.Component {
+  state = {
+    username: "",
+    password: ""
+  };
+
   _onPressButton() {
-    Alert.alert("You tapped the button!");
+    Alert.alert("Please use guest account");
   }
 
   render() {
     return (
       <ImageBackground
         source={require("../assets/bkgnd-img.jpg")}
-        style={styles.container}
+        style={styles.image}
       >
-        <View style={styles.container}>
-          <View style={styles.container}>
-            <Text style={styles.headerText}>
-              Setting background image in react native application
-            </Text>
+        <View>
+          <Text style={styles.headerText}>Login</Text>
+          <View>
+            <FormLabel labelStyle={{ color: "white" }}>Username</FormLabel>
+            <FormInput
+              inputStyle={{ color: "white" }}
+              defaultValue={"Use Guest Account Below"}
+              containerStyle={{ width: 400 }}
+              onChangeText={username => this.setState({ username })}
+              ref={input => (this.username = input)}
+            />
+          </View>
+          <View>
+            <FormLabel labelStyle={{ color: "white" }}>Password</FormLabel>
+            <FormInput
+              inputStyle={{ color: "white" }}
+              defaultValue={"Use Guest Account Below"}
+              containerStyle={{ width: 400 }}
+              onChangeText={password => this.setState({ password })}
+              ref={input => (this.password = input)}
+            />
           </View>
           <View style={styles.buttonContainer}>
+            <View>
+              <Button
+                raised
+                icon={{ name: "account-box" }}
+                title="Guest Musician"
+                onPress={() => this.props.navigation.navigate("ArtistHome")}
+              />
+            </View>
+            <View>
+              <Button
+                raised
+                icon={{ name: "account-circle" }}
+                title="Guest Curator"
+                onPress={() => this.props.navigation.navigate("CuratorHome")}
+              />
+            </View>
+          </View>
+          <View>
             <Button
               raised
-              icon={{ name: "cached" }}
-              title="Press Me"
+              icon={{ name: "library-music" }}
+              title="Submit"
               onPress={this._onPressButton}
             />
           </View>
@@ -34,13 +73,13 @@ export default class CuratorArtistLandingPage extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  image: {
     flex: 1,
+    width: null,
+    height: null,
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "column",
-    width: null,
-    height: null
+    flexDirection: "column"
   },
   headerText: {
     fontSize: 24,
@@ -50,6 +89,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   buttonContainer: {
+    // flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
     margin: 20
+  },
+  button: {
+    // margin: 20
   }
 });

@@ -5,7 +5,10 @@ import { Button } from "react-native-elements";
 import ArtistHomeView from "./components/ArtistHomeView";
 import ArtistSongList from "./components/ArtistSongList";
 import CuratorArtistLoginSignup from "./containers/CuratorArtistLoginSignup";
+import CuratorHomeView from "./components/CuratorHomeView";
+//needs to render the login screen that has an option to select if user is musician or curator**
 
+//temporary. renders the 4 buttons to practice routing. needs to be login screen. see comment above
 class HomeScreen extends React.Component {
   render() {
     return (
@@ -44,6 +47,7 @@ class HomeScreen extends React.Component {
   }
 }
 
+//another temp screen that was for route testing purposes
 class DetailsScreen extends React.Component {
   render() {
     return (
@@ -74,20 +78,21 @@ class DetailsScreen extends React.Component {
     );
   }
 }
-
+//part of react navigator. add all possible routes here and use these keys to route across all app.
 const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
     DetailsScreen: DetailsScreen,
     ArtistHome: ArtistHomeView,
     ArtistSongs: ArtistSongList,
-    LoginSignup: CuratorArtistLoginSignup
+    LoginSignup: CuratorArtistLoginSignup,
+    CuratorHome: CuratorHomeView
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "LoginSignup"
   }
 );
-
+//wrapper for navigator/routes
 const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
