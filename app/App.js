@@ -1,12 +1,11 @@
 import React from "react";
-import { StyleSheet, Button, Image } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import ArtistHomeView from "./components/ArtistHomeView";
 import ArtistSongList from "./components/ArtistSongList";
 import CuratorArtistLoginSignup from "./containers/CuratorArtistLoginSignup";
 import CuratorHomeView from "./components/CuratorHomeView";
 
-//part of react navigator. add all possible routes here and use these keys to route across all app.
+//part of react navigator. add all possible routes here and use these keys to route across entire app.
 const RootStack = createStackNavigator(
   {
     ArtistHome: ArtistHomeView,

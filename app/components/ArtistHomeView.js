@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import {
   FormLabel,
   FormInput,
@@ -61,8 +61,12 @@ export default class ArtistHomeView extends Component {
 
   render() {
     return (
-      <View>
-        {/* <Header
+      <ImageBackground
+        source={require("../assets/bkgnd-img.jpg")}
+        style={styles.image}
+      >
+        <View>
+          {/* <Header
           leftComponent={{ icon: "menu", color: "#fff" }}
           centerComponent={{
             text: "Artist Home Page",
@@ -70,47 +74,63 @@ export default class ArtistHomeView extends Component {
           }}
           rightComponent={{ icon: "home", color: "#fff" }}
         /> */}
-        <View>
-          <Text h4 style={{ textAlign: "center" }}>
-            Add a new song to your list
-          </Text>
           <View>
-            <FormLabel>Artist Name</FormLabel>
-            <FormInput
-              onChangeText={artistName => this.setState({ artistName })}
-              ref={input => (this.artist = input)}
+            <Text h4 style={{ textAlign: "center" }}>
+              Add a new song to your list
+            </Text>
+            <View style={{ width: 600 }}>
+              <FormLabel labelStyle={{ color: "white" }}>Artist Name</FormLabel>
+              <FormInput
+                inputStyle={{ color: "white" }}
+                onChangeText={artistName => this.setState({ artistName })}
+                ref={input => (this.artist = input)}
+              />
+            </View>
+            <View style={{ width: 600 }}>
+              <FormLabel labelStyle={{ color: "white" }}>Song Name</FormLabel>
+              <FormInput
+                inputStyle={{ color: "white" }}
+                onChangeText={songName => this.setState({ songName })}
+                ref={input => (this.song = input)}
+              />
+            </View>
+            <View style={{ width: 600 }}>
+              <FormLabel labelStyle={{ color: "white" }}>Genre</FormLabel>
+              <FormInput
+                inputStyle={{ color: "white" }}
+                labelStyle={{ color: "white" }}
+                onChangeText={genre => this.setState({ genre })}
+                ref={input => (this.genre = input)}
+              />
+            </View>
+            <Button
+              backgroundColor={"#008cba"}
+              icon={{ name: "music-note" }}
+              buttonStyle={{ marginTop: 10 }}
+              title="Add Song"
+              onPress={() => this.addNewSong()}
+            />
+            <Button
+              backgroundColor={"#008cba"}
+              icon={{ name: "featured-play-list" }}
+              buttonStyle={{ marginTop: 10 }}
+              title="View Song List"
+              onPress={() => this.props.navigation.navigate("ArtistSongs")}
             />
           </View>
-          <View>
-            <FormLabel>Song Name</FormLabel>
-            <FormInput
-              onChangeText={songName => this.setState({ songName })}
-              ref={input => (this.song = input)}
-            />
-          </View>
-          <View>
-            <FormLabel>Genre</FormLabel>
-            <FormInput
-              onChangeText={genre => this.setState({ genre })}
-              ref={input => (this.genre = input)}
-            />
-          </View>
-          <Button
-            backgroundColor={"#008cba"}
-            icon={{ name: "music-note" }}
-            buttonStyle={{ marginTop: 10 }}
-            title="Add Song"
-            onPress={() => this.addNewSong()}
-          />
-          <Button
-            backgroundColor={"#008cba"}
-            icon={{ name: "music-note" }}
-            buttonStyle={{ marginTop: 10 }}
-            title="View Song List"
-            onPress={() => this.props.navigation.navigate("ArtistSongs")}
-          />
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    width: null,
+    height: null,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column"
+  }
+});
