@@ -21,7 +21,7 @@ export default class ArtistSongList extends Component {
     const { sl } = this.state;
     return sl.length > 0 ? (
       <View>
-        <Text style={{ fontSize: 16, marginTop: 10, marginLeft: 30 }}>
+        <Text style={{ fontSize: 16, marginTop: 10, marginLeft: 40 }}>
           Click any song to add to jukebox:
         </Text>
         <List containerStyle={{ width: 700, marginLeft: 35 }}>

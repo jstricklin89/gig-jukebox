@@ -14,20 +14,23 @@ export default class ArtistHomeView extends Component {
   //executes after "add song" button has been pressed to add or find song
   addNewSong = () => {
     const { artistName, songName, genre } = this.state;
-
-    fetch("http://localhost:3000/api/v1/songs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify({
-        name: songName,
-        genre: genre,
-        artist: artistName
+    if (artistName.length > 0 && songName.length > 0 && genre.length > 0) {
+      fetch("http://localhost:3000/api/v1/songs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify({
+          name: songName,
+          genre: genre,
+          artist: artistName
+        })
       })
-    })
-      .then(r => r.json())
-      .then(song => this.addSongToList(song));
+        .then(r => r.json())
+        .then(song => this.addSongToList(song));
+    } else {
+      alert("Blank fields not allowed");
+    }
   };
   //executes after addNewSong is complete to also add to song list
   addSongToList = song => {

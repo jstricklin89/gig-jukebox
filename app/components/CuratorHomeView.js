@@ -47,7 +47,7 @@ export default class CuratorHomeView extends Component {
         style={styles.image}
       >
         <View>
-          <Text
+          {/* <Text
             style={{
               textAlign: "left",
               marginTop: 10,
@@ -56,12 +56,17 @@ export default class CuratorHomeView extends Component {
             }}
           >
             Find Artist by PIN:
-          </Text>
+          </Text> */}
           <View>
             <FormLabel labelStyle={{ color: "white" }}>Artist PIN</FormLabel>
             <FormInput
-              inputStyle={{ color: "white" }}
-              containerStyle={{ width: 80 }}
+              inputStyle={{
+                color: "white",
+                backgroundColor: "black",
+                width: 70,
+                textAlign: "center"
+              }}
+              containerStyle={{ width: 70 }}
               onChangeText={pin => this.setState({ pin: parseInt(pin) })}
               ref={input => (this.artist = input)}
             />
