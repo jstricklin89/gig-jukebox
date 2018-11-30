@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import { List, ListItem } from "react-native-elements";
+import { List, ListItem, Icon } from "react-native-elements";
 
 export default class ArtistSongList extends Component {
   state = {
@@ -17,28 +17,34 @@ export default class ArtistSongList extends Component {
       });
   }
 
-  handlePressListSong = song => {
-    debugger;
-  };
-
   render() {
     const { sl } = this.state;
     return sl.length > 0 ? (
-      <List>
-        {sl.map(song => {
-          return (
-            <ListItem
-              key={song.name}
-              title={song.name}
-              subtitle={song.artist}
-              rightTitle={song.genre}
-              leftIcon={{ name: "music-note" }}
-              onPress={this.handlePressListSong(song)}
-              hideChevron={true}
-            />
-          );
-        })}
-      </List>
+      <View>
+        <Text style={{ fontSize: 16, marginTop: 10, marginLeft: 30 }}>
+          Click any song to add to jukebox:
+        </Text>
+        <List containerStyle={{ width: 700, marginLeft: 35 }}>
+          {sl.map(song => {
+            return (
+              <ListItem
+                key={song.name}
+                title={song.name}
+                subtitle={song.artist}
+                rightTitle={song.genre}
+                leftIcon={{ name: "music-note" }}
+                rightIcon={
+                  <Icon
+                    name="add-circle"
+                    color="#009933"
+                    onPress={() => this.props.handlePressSongList(song)}
+                  />
+                }
+              />
+            );
+          })}
+        </List>
+      </View>
     ) : null;
   }
 }

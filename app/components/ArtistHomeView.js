@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
-import {
-  FormLabel,
-  FormInput,
-  Header,
-  Text,
-  Button
-} from "react-native-elements";
+import { FormLabel, FormInput, Text, Button } from "react-native-elements";
 
 export default class ArtistHomeView extends Component {
   state = {
@@ -38,7 +32,6 @@ export default class ArtistHomeView extends Component {
   //executes after addNewSong is complete to also add to song list
   addSongToList = song => {
     const { songList } = this.state;
-    console.warn(song.id, songList);
     fetch("http://localhost:3000/api/v1/song_list_songs", {
       method: "POST",
       headers: {
@@ -66,14 +59,6 @@ export default class ArtistHomeView extends Component {
         style={styles.image}
       >
         <View>
-          {/* <Header
-          leftComponent={{ icon: "menu", color: "#fff" }}
-          centerComponent={{
-            text: "Artist Home Page",
-            style: { color: "#fff" }
-          }}
-          rightComponent={{ icon: "home", color: "#fff" }}
-        /> */}
           <View>
             <Text h4 style={{ textAlign: "center" }}>
               Add a new song to your list

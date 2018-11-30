@@ -7,7 +7,36 @@ import ArtistJukeboxList from "./ArtistJukeboxList";
 export default class CuratorHomeView extends Component {
   state = {
     pin: 0,
-    user: 1
+    user: 1,
+    jlid: 1
+  };
+
+  handlePressSongList = song => {
+    const { jlid } = this.state;
+    fetch("http://localhost:3000/api/v1/jukebox_list_songs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({
+        jukebox_list_id: jlid,
+        song_id: song.id
+      })
+    });
+  };
+
+  handlePressJukeboxList = song => {
+    const { jlid } = this.state;
+    fetch(`http://localhost:3000/api/v1/jukebox_list_songs/${song.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({
+        jukebox_list_id: jlid,
+        song_id: song.id
+      })
+    });
   };
 
   render() {
@@ -39,11 +68,10 @@ export default class CuratorHomeView extends Component {
           </View>
           {pin === user ? (
             <View>
-              <Text style={{ fontSize: 16, marginTop: 10, marginLeft: 20 }}>
-                Click any song to add to jukebox:
-              </Text>
-              <ArtistSongList />
-              <ArtistJukeboxList />
+              <ArtistSongList handlePressSongList={this.handlePressSongList} />
+              <ArtistJukeboxList
+                handlePressJukeboxList={this.handlePressJukeboxList}
+              />
             </View>
           ) : null}
         </View>
