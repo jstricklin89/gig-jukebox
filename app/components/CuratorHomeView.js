@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, ImageBackground } from "react-native";
-import { FormLabel, FormInput, Text, Button } from "react-native-elements";
+import { FormLabel, FormInput, Text } from "react-native-elements";
 import ArtistSongList from "./ArtistSongList";
 import ArtistJukeboxList from "./ArtistJukeboxList";
 
@@ -47,16 +47,6 @@ export default class CuratorHomeView extends Component {
         style={styles.image}
       >
         <View>
-          {/* <Text
-            style={{
-              textAlign: "left",
-              marginTop: 10,
-              marginLeft: 20,
-              fontSize: 20
-            }}
-          >
-            Find Artist by PIN:
-          </Text> */}
           <View>
             <FormLabel labelStyle={{ color: "white" }}>Artist PIN</FormLabel>
             <FormInput
@@ -73,6 +63,9 @@ export default class CuratorHomeView extends Component {
           </View>
           {pin === user ? (
             <View>
+              <Text style={{ fontSize: 16, marginTop: 10, marginLeft: 40 }}>
+                Click any song to add to jukebox:
+              </Text>
               <ArtistSongList handlePressSongList={this.handlePressSongList} />
               <ArtistJukeboxList
                 handlePressJukeboxList={this.handlePressJukeboxList}

@@ -1,72 +1,67 @@
 import React from "react";
-import { Alert, StyleSheet, View, ImageBackground, Text } from "react-native";
-import { Button, FormLabel, FormInput } from "react-native-elements";
+import { StyleSheet, View, ImageBackground, Text } from "react-native";
+// import { Button, FormLabel, FormInput } from "react-native-elements";
+import CuratorArtistLogin from "../components/CuratorArtistLogin";
+import CuratorArtistSignup from "../components/CuratorArtistSignup";
 //create login page here, change login background image, toggle from musician to curator, route to correct half of app
 export default class CuratorArtistLandingPage extends React.Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    signupView: false
   };
 
-  _onPressButton() {
-    Alert.alert("Please use guest account");
-  }
+  // componentDidMount() {
+  //   fetch("http://localhost:3000/api/v1/users", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       user: {
+  //         first_name: "Clark",
+  //         last_name: "Stricklin",
+  //         username: "cstricklin",
+  //         password_digest: "hi",
+  //         typeof: "musician"
+  //       }
+  //     })
+  //   })
+  //     .then(r => r.json())
+  //     .then(console.log);
+  // }
+  onLoginSubmit = state => {
+    console.log(state);
+  };
+
+  onSignupSubmit = (state, type) => {
+    console.log(state, type);
+  };
+
+  onLinkPress = () => {
+    const { signupView } = this.state;
+    this.setState({ signupView: !signupView });
+  };
 
   render() {
+    const { signupView } = this.state;
     return (
       <ImageBackground
         source={require("../assets/bkgnd-img.jpg")}
         style={styles.image}
       >
-        <View>
-          <Text style={styles.headerText}>Login</Text>
-          <View>
-            <FormLabel labelStyle={{ color: "white" }}>Username</FormLabel>
-            <FormInput
-              inputStyle={{ color: "white" }}
-              defaultValue={"Use Guest Account Below"}
-              containerStyle={{ width: 400 }}
-              onChangeText={username => this.setState({ username })}
-              ref={input => (this.username = input)}
-            />
-          </View>
-          <View>
-            <FormLabel labelStyle={{ color: "white" }}>Password</FormLabel>
-            <FormInput
-              inputStyle={{ color: "white" }}
-              defaultValue={"Use Guest Account Below"}
-              containerStyle={{ width: 400 }}
-              onChangeText={password => this.setState({ password })}
-              ref={input => (this.password = input)}
-            />
-          </View>
-          <View style={styles.buttonContainer}>
-            <View>
-              <Button
-                raised
-                icon={{ name: "account-box" }}
-                title="Guest Musician"
-                onPress={() => this.props.navigation.navigate("ArtistHome")}
-              />
-            </View>
-            <View>
-              <Button
-                raised
-                icon={{ name: "account-circle" }}
-                title="Guest Curator"
-                onPress={() => this.props.navigation.navigate("CuratorHome")}
-              />
-            </View>
-          </View>
-          <View>
-            <Button
-              raised
-              icon={{ name: "library-music" }}
-              title="Submit"
-              onPress={this._onPressButton}
-            />
-          </View>
-        </View>
+        {signupView ? (
+          <CuratorArtistSignup
+            onSignupSubmit={this.onSignupSubmit}
+            onLoginLinkPress={this.onLinkPress}
+          />
+        ) : (
+          <CuratorArtistLogin
+            onLoginSubmit={this.onLoginSubmit}
+            onSignupLinkPress={this.onLinkPress}
+          />
+        )}
       </ImageBackground>
     );
   }
@@ -80,21 +75,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column"
-  },
-  headerText: {
-    fontSize: 24,
-    textAlign: "center",
-    margin: 10,
-    color: "white",
-    fontWeight: "bold"
-  },
-  buttonContainer: {
-    // flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    margin: 20
-  },
-  button: {
-    // margin: 20
   }
 });
