@@ -1,42 +1,66 @@
 import React from "react";
-import { StyleSheet, View, ImageBackground, Text } from "react-native";
-// import { Button, FormLabel, FormInput } from "react-native-elements";
+import { StyleSheet, ImageBackground } from "react-native";
 import CuratorArtistLogin from "../components/CuratorArtistLogin";
 import CuratorArtistSignup from "../components/CuratorArtistSignup";
-//create login page here, change login background image, toggle from musician to curator, route to correct half of app
+import deviceStorage from "../services/DeviceStorage";
+
 export default class CuratorArtistLandingPage extends React.Component {
   state = {
     username: "",
     password: "",
+    error: "",
+    loading: true,
     signupView: false
   };
 
-  // componentDidMount() {
-  //   fetch("http://localhost:3000/api/v1/users", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       user: {
-  //         first_name: "Clark",
-  //         last_name: "Stricklin",
-  //         username: "cstricklin",
-  //         password_digest: "hi",
-  //         typeof: "musician"
-  //       }
-  //     })
-  //   })
-  //     .then(r => r.json())
-  //     .then(console.log);
-  // }
-  onLoginSubmit = state => {
-    console.log(state);
+  onLoginSubmit = data => {
+    console.log(data);
+    fetch("http://localhost:3000/api/v1/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          username: data.username,
+          password: data.password
+        }
+      })
+    })
+      .then(r => r.json())
+      .then(r => {
+        console.log(r);
+        // deviceStorage.saveItem("id_token", r.jwt);
+        // deviceStorage.saveItem("user", r.user);
+      })
+      .catch(err => console.log(err));
   };
 
-  onSignupSubmit = (state, type) => {
-    console.log(state, type);
+  onSignupSubmit = (data, type) => {
+    console.log(data.firstname, type);
+    fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          first_name: data.firstname,
+          last_name: data.lastname,
+          username: data.username,
+          password: data.password,
+          typeof: type
+        }
+      })
+    })
+      .then(r => r.json())
+      .then(r => {
+        deviceStorage.saveItem("id_token", r.jwt);
+        deviceStorage.saveItem("user", r.user);
+      })
+      .catch(err => console.log(err));
   };
 
   onLinkPress = () => {

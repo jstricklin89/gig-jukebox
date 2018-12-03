@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, StyleSheet, View, ImageBackground, Text } from "react-native";
+import { StyleSheet, View, ImageBackground, Text } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
 
 export default class CuratorArtistSignup extends React.Component {
@@ -10,10 +10,6 @@ export default class CuratorArtistSignup extends React.Component {
     lastname: "",
     typeof: ""
   };
-
-  // onSignupSubmit = type => {
-  //   this.props.onSignupSubmit(this.state, type);
-  // };
 
   render() {
     return (
@@ -42,6 +38,8 @@ export default class CuratorArtistSignup extends React.Component {
           <FormInput
             inputStyle={{ color: "white" }}
             containerStyle={{ width: 500 }}
+            autoCapitalize={"none"}
+            autoCorrect={false}
             onChangeText={username => this.setState({ username })}
             ref={input => (this.username = input)}
           />
@@ -51,6 +49,8 @@ export default class CuratorArtistSignup extends React.Component {
           <FormInput
             inputStyle={{ color: "white" }}
             containerStyle={{ width: 500 }}
+            autoCapitalize={"none"}
+            secureTextEntry={true}
             onChangeText={password => this.setState({ password })}
             ref={input => (this.password = input)}
           />

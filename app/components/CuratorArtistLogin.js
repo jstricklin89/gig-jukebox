@@ -8,10 +8,6 @@ export default class CuratorArtistLogin extends React.Component {
     password: ""
   };
 
-  onLoginSubmit = () => {
-    this.props.onLoginSubmit(this.state);
-  };
-
   render() {
     return (
       <View>
@@ -21,6 +17,8 @@ export default class CuratorArtistLogin extends React.Component {
           <FormInput
             inputStyle={{ color: "white" }}
             containerStyle={{ width: 400 }}
+            autoCapitalize={"none"}
+            autoCorrect={false}
             onChangeText={username => this.setState({ username })}
             ref={input => (this.username = input)}
           />
@@ -30,6 +28,8 @@ export default class CuratorArtistLogin extends React.Component {
           <FormInput
             inputStyle={{ color: "white" }}
             containerStyle={{ width: 400 }}
+            autoCapitalize={"none"}
+            secureTextEntry={true}
             onChangeText={password => this.setState({ password })}
             ref={input => (this.password = input)}
           />
@@ -57,7 +57,7 @@ export default class CuratorArtistLogin extends React.Component {
             raised
             icon={{ name: "library-music" }}
             title="Submit"
-            onPress={this.onLoginSubmit}
+            onPress={() => this.props.onLoginSubmit(this.state)}
           />
         </View>
         <Text
