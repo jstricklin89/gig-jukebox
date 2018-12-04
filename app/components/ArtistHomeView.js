@@ -12,10 +12,6 @@ export default class ArtistHomeView extends Component {
     userId: 1 //change this once redux is added
   };
 
-  // componentDidMount() {
-  //   spotifyApi.setAccessToken
-  // }
-
   //executes after "add song" button has been pressed to add or find song
   addNewSong = () => {
     const { artistName, songName, genre } = this.state;

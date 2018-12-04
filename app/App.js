@@ -6,6 +6,8 @@ import CuratorArtistLoginSignup from "./containers/CuratorArtistLoginSignup";
 import CuratorHomeView from "./components/CuratorHomeView";
 import CuratorArtistLogin from "./components/CuratorArtistLogin";
 import CuratorArtistSignup from "./components/CuratorArtistSignup";
+import { Provider } from "react-redux";
+import { store } from "./ConfigureStore";
 
 //part of react navigator. add all possible routes here and use these keys to route across entire app.
 const RootStack = createStackNavigator(
@@ -27,6 +29,10 @@ const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
   }
 }

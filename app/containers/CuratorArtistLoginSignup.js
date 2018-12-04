@@ -1,45 +1,78 @@
 import React from "react";
-import { StyleSheet, ImageBackground, AsyncStorage } from "react-native";
+import { StyleSheet, ImageBackground } from "react-native";
 import CuratorArtistLogin from "../components/CuratorArtistLogin";
 import CuratorArtistSignup from "../components/CuratorArtistSignup";
-import deviceStorage from "../services/DeviceStorage";
+import { connect } from "react-redux";
+import { test, login } from "../actions/actionCreators";
 
-export default class CuratorArtistLandingPage extends React.Component {
-  state = {
-    username: "",
-    password: "",
-    error: "",
-    id_token: "",
-    typeof: "",
-    loading: true,
-    signupView: false
+const mapDispatchToProps = dispatch => ({
+  test: () => dispatch(test()),
+  login: data => dispatch(login(data))
+});
+
+const mapStateToProps = state => ({
+  ...state.app,
+  jls: state.jls
+});
+
+class CuratorArtistLandingPage extends React.Component {
+  componentDidUpdate = () => {
+    console.log("CuratorArtistLandingPage did updata", this.props);
   };
-
-  onLoginSubmit = data => {
-    console.log(data);
-    fetch("http://localhost:3000/api/v1/login", {
-      method: "POST",
+  //fetch all songLists to store in state
+  fetchSongLists = () => {
+    fetch("http://localhost:3000/api/v1/song_lists", {
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        user: {
-          username: data.username,
-          password: data.password
-        }
-      })
+        Authorization: "Bearer " + this.props.id_token
+      }
     })
       .then(r => r.json())
-      .then(r => {
-        deviceStorage.saveItem("id_token", r.jwt);
-        deviceStorage.saveItem("id", r.user.id.toString());
-        deviceStorage.saveItem("typeof", r.user.typeof);
-        deviceStorage.saveItem("username", r.user.username);
-      })
-      .then(this.props.navigation.navigate("CuratorHome"))
-      .catch(err => alert(err));
+      .then(slists => {
+        let sl = slists.find(sl => sl.user_id === this.props.id);
+        this.setState({ sl: sl.songs });
+      });
   };
+  //fetch all jukeboxLists to store in state
+  fetchJukeboxLists = () => {
+    fetch("http://localhost:3000/api/v1/jukebox_lists", {
+      headers: {
+        Authorization: "Bearer " + this.props.id_token
+      }
+    })
+      .then(r => r.json())
+      .then(jlists => {
+        let jl = jlists.find(jl => jl.user_id === this.props.user);
+        this.setState({ jls: jl.songs, jl });
+      });
+  };
+  //runs when login page submit button is pressed
+  // onLoginSubmit = data => {
+  //   fetch("http://localhost:3000/api/v1/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       user: {
+  //         username: data.username,
+  //         password: data.password
+  //       }
+  //     })
+  //   })
+  //     .then(r => r.json())
+  //     .then(r => {
+  //       this.setState({
+  //         id_token: r.jwt,
+  //         id: r.user.id,
+  //         typeof: r.user.typeof,
+  //         username: r.user.username
+  //       });
+  //     })
+  //     .then(this.fetchSongLists)
+  //     .then(this.fetchJukeboxLists)
+  //     .then(this.props.navigation.navigate("CuratorHome"));
+  // };
 
   onSignupSubmit = (data, type) => {
     console.log(data.firstname, type);
@@ -61,31 +94,25 @@ export default class CuratorArtistLandingPage extends React.Component {
     })
       .then(r => r.json())
       .then(r => {
-        deviceStorage.saveItem("id_token", r.jwt);
-        deviceStorage.saveItem("id", r.user.id.toString());
-        deviceStorage.saveItem("typeof", r.user.typeof);
-        deviceStorage.saveItem("username", r.user.username);
+        this.setState({
+          id_token: r.jwt,
+          id: r.user.id,
+          typeof: r.user.typeof,
+          username: r.user.username
+        });
       })
-      .then(console.log(AsyncStorage.getItem("id_token")))
-      .catch(err => alert(err));
+      .then(this.fetchSongLists)
+      .then(this.fetchJukeboxLists)
+      .then(this.props.navigation.navigate("CuratorHome"));
   };
 
   onLinkPress = () => {
-    const { signupView } = this.state;
+    const { signupView } = this.props;
     this.setState({ signupView: !signupView });
   };
 
-  navigateLogin = () => {
-    console.warn("nav");
-    const token = AsyncStorage.getItem("id_token");
-    // const type = AsyncStorage.getItem("typeof");
-    // type === "musician"
-    //   ? () => this.props.navigation.navigate("ArtistHome")
-    //   : () => this.props.navigation.navigate("CuratorHome");
-  };
-
   render() {
-    const { signupView } = this.state;
+    const { signupView } = this.props;
     return (
       <ImageBackground
         source={require("../assets/bkgnd-img.jpg")}
@@ -93,16 +120,19 @@ export default class CuratorArtistLandingPage extends React.Component {
       >
         {signupView ? (
           <CuratorArtistSignup
-            onSignupSubmit={this.onSignupSubmit}
+            passedState={this.props}
             onLoginLinkPress={this.onLinkPress}
-            guestMusician={() => this.props.navigation.navigate("ArtistHome")}
-            guestCurator={() => this.props.navigation.navigate("CuratorHome")}
+            guestMusician={this.onSignupSubmit}
+            guestCurator={this.onSignupSubmit}
           />
         ) : (
           <CuratorArtistLogin
-            onLoginSubmit={this.onLoginSubmit}
+            passedState={this.props}
+            onLoginSubmit={data => {
+              this.props.login(data);
+            }}
             onSignupLinkPress={this.onLinkPress}
-            guestMusician={() => this.props.navigation.navigate("ArtistHome")}
+            guestMusician={() => this.props.navigation.navigate("ArtistHome")} //need to add method to login guest
             guestCurator={() => this.props.navigation.navigate("CuratorHome")}
           />
         )}
@@ -110,6 +140,11 @@ export default class CuratorArtistLandingPage extends React.Component {
     );
   }
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CuratorArtistLandingPage);
 
 const styles = StyleSheet.create({
   image: {
