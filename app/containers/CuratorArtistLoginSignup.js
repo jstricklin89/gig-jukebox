@@ -37,7 +37,7 @@ export default class CuratorArtistLandingPage extends React.Component {
         deviceStorage.saveItem("typeof", r.user.typeof);
         deviceStorage.saveItem("username", r.user.username);
       })
-      .then(() => deviceStorage.loadJWT("id_token"))
+      .then(this.props.navigation.navigate("CuratorHome"))
       .catch(err => alert(err));
   };
 
@@ -66,7 +66,7 @@ export default class CuratorArtistLandingPage extends React.Component {
         deviceStorage.saveItem("typeof", r.user.typeof);
         deviceStorage.saveItem("username", r.user.username);
       })
-      .then(() => deviceStorage.loadJWT("id_token"))
+      .then(console.log(AsyncStorage.getItem("id_token")))
       .catch(err => alert(err));
   };
 
@@ -95,11 +95,15 @@ export default class CuratorArtistLandingPage extends React.Component {
           <CuratorArtistSignup
             onSignupSubmit={this.onSignupSubmit}
             onLoginLinkPress={this.onLinkPress}
+            guestMusician={() => this.props.navigation.navigate("ArtistHome")}
+            guestCurator={() => this.props.navigation.navigate("CuratorHome")}
           />
         ) : (
           <CuratorArtistLogin
             onLoginSubmit={this.onLoginSubmit}
             onSignupLinkPress={this.onLinkPress}
+            guestMusician={() => this.props.navigation.navigate("ArtistHome")}
+            guestCurator={() => this.props.navigation.navigate("CuratorHome")}
           />
         )}
       </ImageBackground>

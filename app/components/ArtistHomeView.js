@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { FormLabel, FormInput, Text, Button } from "react-native-elements";
+import { setAccessToken } from "spotify-web-api-node";
 
 export default class ArtistHomeView extends Component {
   state = {
@@ -10,6 +11,10 @@ export default class ArtistHomeView extends Component {
     songList: 1,
     userId: 1 //change this once redux is added
   };
+
+  // componentDidMount() {
+  //   spotifyApi.setAccessToken
+  // }
 
   //executes after "add song" button has been pressed to add or find song
   addNewSong = () => {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, ImageBackground } from "react-native";
-import { FormLabel, FormInput, Text } from "react-native-elements";
+import { FormLabel, FormInput, Text, Button } from "react-native-elements";
 import ArtistSongList from "./ArtistSongList";
 import ArtistJukeboxList from "./ArtistJukeboxList";
 
@@ -72,7 +72,6 @@ export default class CuratorHomeView extends Component {
               />
             </View>
           ) : null}
-          <Button>Logout</Button>
         </View>
       </ImageBackground>
     );

@@ -61,7 +61,7 @@ export default class CuratorArtistSignup extends React.Component {
               raised
               icon={{ name: "account-box" }}
               title="Signup as a Musician"
-              onPress={() => this.props.onSignupSubmit(this.state, "musician")}
+              onPress={this.props.guestMusician}
             />
           </View>
           <View>
@@ -69,7 +69,7 @@ export default class CuratorArtistSignup extends React.Component {
               raised
               icon={{ name: "account-circle" }}
               title="Signup as a Curator"
-              onPress={() => this.props.onSignupSubmit(this.state, "curator")}
+              onPress={this.props.guestCurator}
             />
           </View>
         </View>

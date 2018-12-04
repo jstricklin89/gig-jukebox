@@ -40,7 +40,7 @@ export default class CuratorArtistLogin extends React.Component {
               raised
               icon={{ name: "account-box" }}
               title="Guest Musician"
-              onPress={() => this.props.navigation.navigate("ArtistHome")}
+              onPress={this.props.guestMusician}
             />
           </View>
           <View>
@@ -48,7 +48,7 @@ export default class CuratorArtistLogin extends React.Component {
               raised
               icon={{ name: "account-circle" }}
               title="Guest Curator"
-              onPress={() => this.props.navigation.navigate("CuratorHome")}
+              onPress={this.props.guestCurator}
             />
           </View>
         </View>
