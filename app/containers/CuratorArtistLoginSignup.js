@@ -17,34 +17,34 @@ const mapStateToProps = state => ({
 
 class CuratorArtistLandingPage extends React.Component {
   componentDidUpdate = () => {
-    console.log("CuratorArtistLandingPage did updata", this.props);
+    // console.log("CuratorArtistLandingPage did updata", this.props);
   };
   //fetch all songLists to store in state
-  fetchSongLists = () => {
-    fetch("http://localhost:3000/api/v1/song_lists", {
-      headers: {
-        Authorization: "Bearer " + this.props.id_token
-      }
-    })
-      .then(r => r.json())
-      .then(slists => {
-        let sl = slists.find(sl => sl.user_id === this.props.id);
-        this.setState({ sl: sl.songs });
-      });
-  };
+  // fetchSongLists = () => {
+  //   fetch("http://localhost:3000/api/v1/song_lists", {
+  //     headers: {
+  //       Authorization: "Bearer " + this.props.id_token
+  //     }
+  //   })
+  //     .then(r => r.json())
+  //     .then(slists => {
+  //       let sl = slists.find(sl => sl.user_id === this.props.id);
+  //       this.setState({ sl: sl.songs });
+  //     });
+  // };
   //fetch all jukeboxLists to store in state
-  fetchJukeboxLists = () => {
-    fetch("http://localhost:3000/api/v1/jukebox_lists", {
-      headers: {
-        Authorization: "Bearer " + this.props.id_token
-      }
-    })
-      .then(r => r.json())
-      .then(jlists => {
-        let jl = jlists.find(jl => jl.user_id === this.props.user);
-        this.setState({ jls: jl.songs, jl });
-      });
-  };
+  // fetchJukeboxLists = () => {
+  //   fetch("http://localhost:3000/api/v1/jukebox_lists", {
+  //     headers: {
+  //       Authorization: "Bearer " + this.props.id_token
+  //     }
+  //   })
+  //     .then(r => r.json())
+  //     .then(jlists => {
+  //       let jl = jlists.find(jl => jl.user_id === this.props.user);
+  //       this.setState({ jls: jl.songs, jl });
+  //     });
+  // };
   //runs when login page submit button is pressed
   // onLoginSubmit = data => {
   //   fetch("http://localhost:3000/api/v1/login", {
@@ -75,7 +75,7 @@ class CuratorArtistLandingPage extends React.Component {
   // };
 
   onSignupSubmit = (data, type) => {
-    console.log(data.firstname, type);
+    // console.log(data.firstname, type);
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {
@@ -129,7 +129,9 @@ class CuratorArtistLandingPage extends React.Component {
           <CuratorArtistLogin
             passedState={this.props}
             onLoginSubmit={data => {
-              this.props.login(data);
+              this.props
+                .login(data)
+                .then(() => this.props.navigation.navigate("CuratorHome"));
             }}
             onSignupLinkPress={this.onLinkPress}
             guestMusician={() => this.props.navigation.navigate("ArtistHome")} //need to add method to login guest

@@ -7,7 +7,7 @@ import ArtistJukeboxList from "./ArtistJukeboxList";
 export default class CuratorHomeView extends Component {
   state = {
     pin: 0,
-    user: 1,
+    user: 2,
     jlid: 1
   };
 
@@ -48,7 +48,7 @@ export default class CuratorHomeView extends Component {
       >
         <View>
           <View>
-            <FormLabel labelStyle={{ color: "white" }}>Artist PIN</FormLabel>
+            <FormLabel labelStyle={{ color: "white" }}>Artist PIN</FormLabel
             <FormInput
               inputStyle={{
                 color: "white",

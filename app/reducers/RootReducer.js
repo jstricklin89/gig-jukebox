@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
 import jukeboxListReducer from "./JukeboxListReducer";
-import { TEST, LOGIN } from "../actions/types";
+import {
+  TEST,
+  LOGIN,
+  FETCH_SONG_LISTS,
+  FETCH_JUKEBOX_LISTS
+} from "../actions/types";
 
 const INITIAL_STATE = {
   username: "",
@@ -16,6 +21,16 @@ const INITIAL_STATE = {
 const appReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN:
+      return {
+        ...state,
+        ...action.payload
+      };
+    case FETCH_SONG_LISTS:
+      return {
+        ...state,
+        ...action.payload
+      };
+    case FETCH_JUKEBOX_LISTS:
       return {
         ...state,
         ...action.payload

@@ -1,19 +1,25 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { List, ListItem, Icon } from "react-native-elements";
+import { connect } from "react-redux";
 
-export default class ArtistSongList extends Component {
+const mapStateToProps = state => ({
+  ...state.app,
+  jls: state.jls
+});
+
+class ArtistSongList extends Component {
   state = {
     sl: [],
     user: 1
   };
 
   componentDidUpdate() {
-    console.log(this.state, "component did update artistsonglist");
+    console.log(this.props, "component did update artistsonglist");
   }
 
   componentDidMount() {
-    console.log(this.state, "component did mount artistsonglist");
+    console.log(this.props, "component did mount artistsonglist");
   }
 
   render() {
@@ -42,3 +48,5 @@ export default class ArtistSongList extends Component {
     ) : null;
   }
 }
+
+export default connect(mapStateToProps)(ArtistSongList);
