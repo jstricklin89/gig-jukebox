@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, ImageBackground, AsyncStorage } from "react-native";
 import CuratorArtistLogin from "../components/CuratorArtistLogin";
 import CuratorArtistSignup from "../components/CuratorArtistSignup";
 import deviceStorage from "../services/DeviceStorage";
@@ -9,6 +9,8 @@ export default class CuratorArtistLandingPage extends React.Component {
     username: "",
     password: "",
     error: "",
+    id_token: "",
+    typeof: "",
     loading: true,
     signupView: false
   };
@@ -30,11 +32,13 @@ export default class CuratorArtistLandingPage extends React.Component {
     })
       .then(r => r.json())
       .then(r => {
-        console.log(r);
-        // deviceStorage.saveItem("id_token", r.jwt);
-        // deviceStorage.saveItem("user", r.user);
+        deviceStorage.saveItem("id_token", r.jwt);
+        deviceStorage.saveItem("id", r.user.id.toString());
+        deviceStorage.saveItem("typeof", r.user.typeof);
+        deviceStorage.saveItem("username", r.user.username);
       })
-      .catch(err => console.log(err));
+      .then(() => deviceStorage.loadJWT("id_token"))
+      .catch(err => alert(err));
   };
 
   onSignupSubmit = (data, type) => {
@@ -58,14 +62,26 @@ export default class CuratorArtistLandingPage extends React.Component {
       .then(r => r.json())
       .then(r => {
         deviceStorage.saveItem("id_token", r.jwt);
-        deviceStorage.saveItem("user", r.user);
+        deviceStorage.saveItem("id", r.user.id.toString());
+        deviceStorage.saveItem("typeof", r.user.typeof);
+        deviceStorage.saveItem("username", r.user.username);
       })
-      .catch(err => console.log(err));
+      .then(() => deviceStorage.loadJWT("id_token"))
+      .catch(err => alert(err));
   };
 
   onLinkPress = () => {
     const { signupView } = this.state;
     this.setState({ signupView: !signupView });
+  };
+
+  navigateLogin = () => {
+    console.warn("nav");
+    const token = AsyncStorage.getItem("id_token");
+    // const type = AsyncStorage.getItem("typeof");
+    // type === "musician"
+    //   ? () => this.props.navigation.navigate("ArtistHome")
+    //   : () => this.props.navigation.navigate("CuratorHome");
   };
 
   render() {

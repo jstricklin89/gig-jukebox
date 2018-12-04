@@ -72,6 +72,7 @@ export default class CuratorHomeView extends Component {
               />
             </View>
           ) : null}
+          <Button>Logout</Button>
         </View>
       </ImageBackground>
     );

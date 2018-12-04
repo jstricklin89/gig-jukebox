@@ -4,6 +4,8 @@ import ArtistHomeView from "./components/ArtistHomeView";
 import ArtistSongList from "./components/ArtistSongList";
 import CuratorArtistLoginSignup from "./containers/CuratorArtistLoginSignup";
 import CuratorHomeView from "./components/CuratorHomeView";
+import CuratorArtistLogin from "./components/CuratorArtistLogin";
+import CuratorArtistSignup from "./components/CuratorArtistSignup";
 
 //part of react navigator. add all possible routes here and use these keys to route across entire app.
 const RootStack = createStackNavigator(
@@ -11,7 +13,9 @@ const RootStack = createStackNavigator(
     ArtistHome: ArtistHomeView,
     ArtistSongs: ArtistSongList,
     LoginSignup: CuratorArtistLoginSignup,
-    CuratorHome: CuratorHomeView
+    CuratorHome: CuratorHomeView,
+    Login: CuratorArtistLogin,
+    Signup: CuratorArtistSignup
   },
   {
     initialRouteName: "LoginSignup"
