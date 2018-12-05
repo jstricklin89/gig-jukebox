@@ -5,7 +5,6 @@ import { fetchSongLists } from "../actions/actionCreators";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => {
-  console.log(state, "map state jbl state.jls");
   return {
     // jl: state.app.jl,
     // user: state.app.id,

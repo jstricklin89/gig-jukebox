@@ -31,10 +31,9 @@ const appReducer = (state = INITIAL_STATE, action) => {
         ...action.payload
       };
     case FETCH_JUKEBOX_LISTS:
-      console.log("fetchjblappreducer");
       return {
         ...state,
-        ...action.payload.jl
+        jl: action.payload.jl
       };
     case TEST:
       return {

@@ -40,11 +40,9 @@ export const login = data => {
         });
       })
       .then(() => {
-        console.log("going to fetch song lists");
         fetchSongLists(dispatch);
       })
       .then(() => {
-        console.log("going to fetch jukebox lists");
         fetchJukeboxLists(dispatch);
       })
       .then(console.log(store.getState()), "all fetch complete");
@@ -52,8 +50,6 @@ export const login = data => {
 };
 
 export const fetchSongLists = dispatch => {
-  console.log("fetchSongLists called");
-  console.log(store.getState().app.id_token, "idtoken");
   // return dispatch => {
   return fetch("http://localhost:3000/api/v1/song_lists", {
     headers: {
@@ -63,7 +59,6 @@ export const fetchSongLists = dispatch => {
     .then(r => r.json())
     .then(slists => {
       let sl = slists.find(sl => sl.user_id === store.getState().app.id);
-      console.log(sl, "sl in ac");
       // return dispatch => {
       dispatch({
         type: FETCH_SONG_LISTS,
@@ -86,11 +81,10 @@ export const fetchJukeboxLists = dispatch => {
     .then(r => r.json())
     .then(jlists => {
       let jl = jlists.find(jl => jl.user_id === store.getState().app.id);
-      console.log(jl.songs, "fetchjblists");
       dispatch({
         type: FETCH_JUKEBOX_LISTS,
         payload: {
-          jls: jl.songs, //this is my jls we had in seperate reducer, i think?
+          jls: jl.songs,
           jl: jl
         }
       });
