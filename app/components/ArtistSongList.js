@@ -9,17 +9,12 @@ const mapStateToProps = state => ({
 });
 
 class ArtistSongList extends Component {
-  state = {
-    sl: [],
-    user: 1
-  };
-
   componentDidUpdate() {
-    console.log(this.props, "component did update artistsonglist");
+    // console.log(this.props, "component did update artistsonglist");
   }
 
   componentDidMount() {
-    console.log(this.props, "component did mount artistsonglist");
+    // console.log(this.props, "component did mount artistsonglist");
   }
 
   render() {

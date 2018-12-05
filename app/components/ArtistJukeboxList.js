@@ -1,34 +1,40 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { List, ListItem, Button, Icon } from "react-native-elements";
+import { fetchSongLists } from "../actions/actionCreators";
+import { connect } from "react-redux";
 
-export default class ArtistJukeboxList extends Component {
+const mapStateToProps = state => {
+  console.log(state, "map state jbl state.jls");
+  return {
+    // jl: state.app.jl,
+    // user: state.app.id,
+    jls: state.jls
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  songlists: () => dispatch(fetchSongLists())
+});
+
+class ArtistJukeboxList extends Component {
   state = {
     jl: {},
     jls: [],
     user: 2
   };
 
-  componentDidMount() {
-    fetch("http://localhost:3000/api/v1/jukebox_lists")
-      .then(r => r.json())
-      .then(jlists => {
-        let jl = jlists.find(jl => jl.user_id === this.state.user);
-        this.setState({ jls: jl.songs, jl });
-      });
-  }
-
-  updateJukebox = () => {
-    fetch("http://localhost:3000/api/v1/jukebox_lists")
-      .then(r => r.json())
-      .then(jlists => {
-        let jl = jlists.find(jl => jl.user_id === this.state.user);
-        this.setState({ jls: jl.songs, jl });
-      });
-  };
+  // updateJukebox = () => {
+  //   fetch("http://localhost:3000/api/v1/jukebox_lists")
+  //     .then(r => r.json())
+  //     .then(jlists => {
+  //       let jl = jlists.find(jl => jl.user_id === this.state.user);
+  //       this.setState({ jls: jl.songs, jl });
+  //     });
+  // };
 
   render() {
-    const { jls } = this.state;
+    const { jls } = this.props;
     return jls.length > 0 ? (
       <View>
         <Text style={{ fontSize: 16, textAlign: "center", paddingTop: 10 }}>
@@ -59,9 +65,14 @@ export default class ArtistJukeboxList extends Component {
           icon={{ name: "music-video" }}
           buttonStyle={{ marginTop: 10, width: 400, marginLeft: 185 }}
           title="Update Jukebox"
-          onPress={this.updateJukebox}
+          onPress={this.props.songlists}
         />
       </View>
     ) : null;
   }
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ArtistJukeboxList);

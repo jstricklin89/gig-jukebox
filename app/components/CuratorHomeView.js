@@ -48,7 +48,7 @@ export default class CuratorHomeView extends Component {
       >
         <View>
           <View>
-            <FormLabel labelStyle={{ color: "white" }}>Artist PIN</FormLabel
+            <FormLabel labelStyle={{ color: "white" }}>Artist PIN</FormLabel>
             <FormInput
               inputStyle={{
                 color: "white",

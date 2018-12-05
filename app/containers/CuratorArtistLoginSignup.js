@@ -5,6 +5,7 @@ import CuratorArtistSignup from "../components/CuratorArtistSignup";
 import { connect } from "react-redux";
 import { test, login } from "../actions/actionCreators";
 
+//dispatch may not be necessary here for login:
 const mapDispatchToProps = dispatch => ({
   test: () => dispatch(test()),
   login: data => dispatch(login(data))
