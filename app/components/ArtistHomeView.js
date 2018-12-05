@@ -30,6 +30,39 @@ class ArtistHomeView extends Component {
     genre: ""
   };
 
+  handlePressSongList = song => {
+    const { jl } = this.props;
+    console.log(song.id, jl.id);
+    fetch("http://localhost:3000/api/v1/jukebox_list_songs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.id_token
+      },
+      body: JSON.stringify({
+        jukebox_list_song: {
+          jukebox_list_id: jl.id,
+          song_id: song.id
+        }
+      })
+    });
+  };
+
+  handlePressJukeboxList = song => {
+    const { jl } = this.props;
+    fetch(`http://localhost:3000/api/v1/jukebox_list_songs/${song.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.id_token
+      },
+      body: JSON.stringify({
+        jukebox_list_id: jl.id,
+        song_id: song.id
+      })
+    });
+  };
+
   //executes after "add song" button has been pressed to add or find song
   addNewSong = () => {
     console.log(this.props);
@@ -126,7 +159,7 @@ class ArtistHomeView extends Component {
               icon={{ name: "featured-play-list" }}
               buttonStyle={{ marginTop: 10 }}
               title="View Song List"
-              onPress={() => this.props.navigation.navigate("ArtistSongs")}
+              onPress={() => this.props.navigation.navigate("CuratorHome")}
             />
           </View>
         </View>

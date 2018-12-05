@@ -59,6 +59,11 @@ class CuratorArtistLandingPage extends React.Component {
     this.setState({ signupView: !signupView });
   };
 
+  clearAllInputs = () => {
+    this.username.clearText();
+    this.password.clearText();
+  };
+
   render() {
     const { signupView } = this.props;
     return (
@@ -85,7 +90,8 @@ class CuratorArtistLandingPage extends React.Component {
                 .then(() => {
                   this.props.fetchJukeboxLists();
                 })
-                .then(() => this.props.navigation.navigate("ArtistHome"));
+                .then(() => this.props.navigation.navigate("ArtistHome"))
+                .then(() => this.clearAllInputs())
             }}
             onSignupLinkPress={this.onLinkPress}
             guestMusician={() => this.props.navigation.navigate("ArtistHome")} //need to add method to login guest

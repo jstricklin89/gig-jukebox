@@ -72,7 +72,7 @@ class CuratorHomeView extends Component {
               ref={input => (this.artist = input)}
             />
           </View>
-          {pin === user ? (
+          {pin === user || this.props.typeof === "musician" ? (
             <View>
               <Text style={{ fontSize: 16, marginTop: 10, marginLeft: 40 }}>
                 Click any song to add to jukebox:
