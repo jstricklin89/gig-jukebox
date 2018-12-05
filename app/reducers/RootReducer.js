@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   id_token: "",
   typeof: "",
   sl: [],
+  slid: "",
   jl: {},
   signupView: false
 };

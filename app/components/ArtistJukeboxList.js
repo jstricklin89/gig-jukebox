@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { List, ListItem, Button, Icon } from "react-native-elements";
-import { fetchSongLists } from "../actions/actionCreators";
+import { fetchJukeboxLists } from "../actions/actionCreators";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => {
@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  songlists: () => dispatch(fetchSongLists())
+  jukeboxlists: () => dispatch(fetchJukeboxLists())
 });
 
 class ArtistJukeboxList extends Component {
@@ -64,7 +64,7 @@ class ArtistJukeboxList extends Component {
           icon={{ name: "music-video" }}
           buttonStyle={{ marginTop: 10, width: 400, marginLeft: 185 }}
           title="Update Jukebox"
-          onPress={this.props.songlists}
+          onPress={() => this.props.jukeboxlists()}
         />
       </View>
     ) : null;

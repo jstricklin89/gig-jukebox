@@ -3,8 +3,14 @@ import { StyleSheet, View, ImageBackground } from "react-native";
 import { FormLabel, FormInput, Text, Button } from "react-native-elements";
 import ArtistSongList from "./ArtistSongList";
 import ArtistJukeboxList from "./ArtistJukeboxList";
+import { connect } from "react-redux";
 
-export default class CuratorHomeView extends Component {
+const mapStateToProps = state => ({
+  ...state.app,
+  jls: state.jls
+});
+
+class CuratorHomeView extends Component {
   state = {
     pin: 0,
     user: 2,
@@ -12,28 +18,33 @@ export default class CuratorHomeView extends Component {
   };
 
   handlePressSongList = song => {
-    const { jlid } = this.state;
+    const { jl } = this.props;
+    console.log(song.id, jl.id);
     fetch("http://localhost:3000/api/v1/jukebox_list_songs", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.id_token
       },
       body: JSON.stringify({
-        jukebox_list_id: jlid,
-        song_id: song.id
+        jukebox_list_song: {
+          jukebox_list_id: jl.id,
+          song_id: song.id
+        }
       })
     });
   };
 
   handlePressJukeboxList = song => {
-    const { jlid } = this.state;
+    const { jl } = this.props;
     fetch(`http://localhost:3000/api/v1/jukebox_list_songs/${song.id}`, {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.id_token
       },
       body: JSON.stringify({
-        jukebox_list_id: jlid,
+        jukebox_list_id: jl.id,
         song_id: song.id
       })
     });
@@ -77,6 +88,8 @@ export default class CuratorHomeView extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(CuratorHomeView);
 
 const styles = StyleSheet.create({
   image: {

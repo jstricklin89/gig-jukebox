@@ -3,12 +3,18 @@ import { StyleSheet, ImageBackground } from "react-native";
 import CuratorArtistLogin from "../components/CuratorArtistLogin";
 import CuratorArtistSignup from "../components/CuratorArtistSignup";
 import { connect } from "react-redux";
-import { test, login } from "../actions/actionCreators";
+import {
+  test,
+  login,
+  fetchJukeboxLists,
+  fetchSongLists
+} from "../actions/actionCreators";
 
-//dispatch may not be necessary here for login:
 const mapDispatchToProps = dispatch => ({
   test: () => dispatch(test()),
-  login: data => dispatch(login(data))
+  login: data => dispatch(login(data)),
+  fetchSongLists: () => dispatch(fetchSongLists()),
+  fetchJukeboxLists: () => dispatch(fetchJukeboxLists())
 });
 
 const mapStateToProps = state => ({
@@ -17,66 +23,7 @@ const mapStateToProps = state => ({
 });
 
 class CuratorArtistLandingPage extends React.Component {
-  componentDidUpdate = () => {
-    // console.log("CuratorArtistLandingPage did updata", this.props);
-  };
-  //fetch all songLists to store in state
-  // fetchSongLists = () => {
-  //   fetch("http://localhost:3000/api/v1/song_lists", {
-  //     headers: {
-  //       Authorization: "Bearer " + this.props.id_token
-  //     }
-  //   })
-  //     .then(r => r.json())
-  //     .then(slists => {
-  //       let sl = slists.find(sl => sl.user_id === this.props.id);
-  //       this.setState({ sl: sl.songs });
-  //     });
-  // };
-  //fetch all jukeboxLists to store in state
-  // fetchJukeboxLists = () => {
-  //   fetch("http://localhost:3000/api/v1/jukebox_lists", {
-  //     headers: {
-  //       Authorization: "Bearer " + this.props.id_token
-  //     }
-  //   })
-  //     .then(r => r.json())
-  //     .then(jlists => {
-  //       let jl = jlists.find(jl => jl.user_id === this.props.user);
-  //       this.setState({ jls: jl.songs, jl });
-  //     });
-  // };
-  //runs when login page submit button is pressed
-  // onLoginSubmit = data => {
-  //   fetch("http://localhost:3000/api/v1/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       user: {
-  //         username: data.username,
-  //         password: data.password
-  //       }
-  //     })
-  //   })
-  //     .then(r => r.json())
-  //     .then(r => {
-  //       this.setState({
-  //         id_token: r.jwt,
-  //         id: r.user.id,
-  //         typeof: r.user.typeof,
-  //         username: r.user.username
-  //       });
-  //     })
-  //     .then(this.fetchSongLists)
-  //     .then(this.fetchJukeboxLists)
-  //     .then(this.props.navigation.navigate("CuratorHome"));
-  // };
-
   onSignupSubmit = (data, type) => {
-    // console.log(data.firstname, type);
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {
@@ -132,7 +79,13 @@ class CuratorArtistLandingPage extends React.Component {
             onLoginSubmit={data => {
               this.props
                 .login(data)
-                .then(() => this.props.navigation.navigate("CuratorHome"));
+                .then(() => {
+                  this.props.fetchSongLists();
+                })
+                .then(() => {
+                  this.props.fetchJukeboxLists();
+                })
+                .then(() => this.props.navigation.navigate("ArtistHome"));
             }}
             onSignupLinkPress={this.onLinkPress}
             guestMusician={() => this.props.navigation.navigate("ArtistHome")} //need to add method to login guest
